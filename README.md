@@ -1,3 +1,3 @@
-# gsoc_debanjan
+# gsoc_debanjan_2025
 
-A new Flutter project.
+A K-I-S-S LG Connect App
