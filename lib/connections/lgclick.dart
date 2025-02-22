@@ -16,7 +16,6 @@ class LGonnection {
     
     String LgLogo = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgXmdNgBTXup6bdWew5RzgCmC9pPb7rK487CpiscWB2S8OlhwFHmeeACHIIjx4B5-Iv-t95mNUx0JhB_oATG3-Tq1gs8Uj0-Xb9Njye6rHtKKsnJQJlzZqJxMDnj_2TXX3eA5x6VSgc8aw/s1600/LOGO+LIQUID+GALAXY-sq1000-+OKnoline.png';
     try{
-      // ssh.executekml();
       String kml = '''<?xml version="1.0" encoding="UTF-8"?>
                         <kml xmlns="http://www.opengis.net/kml/2.2">
                           <Document>
@@ -33,7 +32,7 @@ class LGonnection {
                           </Document>
                         </kml>''';
 
-// Call sendKMLToSlave with screen number 3
+      // Call sendKMLToSlave with screen number 3
       ssh.setRefresh();
       await ssh.sendKMLToSlave(3, kml, ssh);
     }
@@ -53,24 +52,27 @@ class LGonnection {
     if(connected == null || connected == false) {
       await _connectToLG();
     }
-    await ssh.upload('assets/kml/taj.kml');
-    await ssh.execute('echo "http://lg1:81/taj.kml" > /var/www/html/kmls.txt');
+    await ssh.upload('assets/kml/TAJ.kml');
+    await ssh.sendCommand('echo "http://lg1:81/TAJ.kml" > /var/www/html/kmls.txt');
+    await ssh.sendCommand(
+        'echo "flytoview=${SSH.lookAtLinear(78.0421422, 27.1751448, 1000.0, 0, 0.5)}" > /tmp/query.txt');
   }
 
   void sendKML2() async{
     if(connected == null || connected == false) {
       await _connectToLG();
     }
-  
-    await ssh.upload("assets/kml/campnou.kml");
-    await ssh.execute('echo "http://lg1:81/campnou.kml" > /var/www/html/kmls.txt');
-  }
+    await ssh.upload("assets/kml/CAMPNOU.kml");
+    await ssh.sendCommand('echo "http://lg1:81/CAMPNOU.kml" > /var/www/html/kmls.txt');
+    await ssh.sendCommand(
+        'echo "flytoview=${SSH.lookAtLinear(2.122754492361461, 41.38097815450467, 1000.0, 0, 0.5)}" > /tmp/query.txt');
+}
 
   void clearKML() async{
     if(connected == null || connected == false) {
       await _connectToLG();
     }
-    ssh.execute('echo "" > /var/www/html/kmls.txt');
+    ssh.sendCommand('echo "" > /var/www/html/kmls.txt');
   }
 
   void reboot() async{

@@ -117,7 +117,7 @@ class SSH {
 
       // Extract the file name from the provided filePath
       final fileName = filePath.split('/').last;
-
+      print("Filename is: $fileName");
       final sftp = await _client!.sftp();
 
       // Upload file directly from byte data
@@ -132,6 +132,8 @@ class SSH {
       await remoteFile.write(Stream.value(uint8ListData).cast<Uint8List>());
       await remoteFile.close();
     } catch (e) {
+      final fileName = filePath.split('/').last;
+      print("Filename is: $fileName");
       print('Error during file upload: $e');
     }
   }
@@ -235,5 +237,8 @@ class SSH {
       print(e);
     }
   }
+
+  static String lookAtLinear(double longitude, double latitude, double zoom, double tilt, double bearing) =>
+      '<LookAt><longitude>$longitude</longitude><latitude>$latitude</latitude><range>$zoom</range><tilt>$tilt</tilt><heading>$bearing</heading><gx:altitudeMode>relativeToGround</gx:altitudeMode></LookAt>';
 
 }
